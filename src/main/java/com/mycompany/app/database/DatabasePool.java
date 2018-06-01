@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package com.mycompany.app.database;
 
 import java.io.FileReader;
 import java.io.IOException;

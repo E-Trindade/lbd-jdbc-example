@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package com.mycompany.app.database;
 
 public abstract class Queries{
     public static final String DAY_ACCUMULATED_SALES_IN_MONTH = "SELECT "+
