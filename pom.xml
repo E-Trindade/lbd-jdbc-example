@@ -14,7 +14,20 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.nanohttpd</groupId>
+      <artifactId>nanohttpd</artifactId>
+      <version>2.2.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.1.1</version>
+    </dependency>
   </dependencies>
+  <properties>
+    <config>config/app.conf</config>
+  </properties>
   <build>
     <plugins>
       <plugin>
@@ -25,6 +38,17 @@
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
+      </plugin>
+       <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.2.1</version>
+          <configuration>
+              <mainClass>com.mycompany.app.App</mainClass>
+               <arguments>
+                <argument>${config}</argument>
+            </arguments>
+          </configuration>
       </plugin>
     </plugins>
   </build>
