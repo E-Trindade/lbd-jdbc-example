@@ -36,35 +36,33 @@ public class MonthlyReportResponse {
     }
 
     public void build(ResultSet rs) throws SQLException {
-        Calendar myCal = new GregorianCalendar(this.year, this.month, 1);
+        Calendar myCal = new GregorianCalendar(this.year, this.month - 1, 1);
         int daysInMonth = myCal.getActualMaximum(Calendar.DAY_OF_MONTH);
         this.daySales = new LinkedList<>();
 
         boolean finished = !rs.next();
-        for (int i = 0; i < daysInMonth; i++) {
+        for (int i = 1; i < daysInMonth + 1; i++) {
             ReportDay day = new ReportDay();
             day.day = i;
             day.month = this.month;
             day.year = this.year;
-            myCal = new GregorianCalendar(this.year, this.month, i);
+            myCal = new GregorianCalendar(this.year, this.month - 1, i);
             day.dayOfWeek = myCal.get(Calendar.DAY_OF_WEEK);
             day.weekOfMonth = myCal.get(Calendar.WEEK_OF_MONTH);
 
             day.revenue = 0;
             if (!finished && rs.getInt("dia") == i) {
                 day.revenue = rs.getDouble("receita");
-                
                 this.salesSum += day.revenue;
                 finished = !rs.next();
             }
             this.daySales.add(day);
         }
 
-        if(this.salesSum == 0)
-            return;
-
         for(ReportDay day : this.daySales){
-            day.fractionInMonth = (double) day.revenue / this.salesSum;
+            if(this.salesSum != 0)
+                day.fractionInMonth = (double) day.revenue / this.salesSum;
+            day.classification = day.fractionInMonth < 0.032? "FRACO" : "ÓTIMO";
         }
     }
 }

@@ -28,6 +28,12 @@
     <config>config/app.conf</config>
   </properties>
   <build>
+    <resources>
+      <resource>
+        <directory>${basedir}/www</directory>
+      </resource>
+    </resources>
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
